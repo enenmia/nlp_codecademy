@@ -1,0 +1,34 @@
+# regex for removing punctuation!
+import re
+# nltk preprocessing magic
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
+from nltk.stem import WordNetLemmatizer
+# grabbing a part of speech function:
+from part_of_speech import get_part_of_speech
+
+text = "So many squids are jumping out of suitcases these days that you can barely go anywhere without seeing one burst forth from a tightly packed valise. I went to the dentist the other day, and sure enough I saw an angry one jump out of my dentist's bag within minutes of arriving. She hardly even noticed."
+
+cleaned = re.sub('\W+', ' ', text)
+tokenized = word_tokenize(cleaned)
+
+stemmer = PorterStemmer()
+stemmed = [stemmer.stem(token) for token in tokenized]
+#"token" is fixed
+#for A in B, A is new, B already exist
+
+lemmatizer = WordNetLemmatizer()
+lemmatized = [lemmatizer.lemmatize(token,get_part_of_speech(token)) for token in tokenized]
+
+print("Stemmed text:")
+print(stemmed)
+print("\nLemmatized text:")
+print(lemmatized)
+
+###output
+Stemmed text:
+['So', 'mani', 'squid', 'are', 'jump', 'out', 'of', 'suitcas', 'these', 'day', 'that', 'you', 'can', 'bare', 'go', 'anywher', 'without', 'see', 'one', 'burst', 'forth', 'from', 'a', 'tightli', 'pack', 'valis', 'I', 'went', 'to', 'the', 'dentist', 'the', 'other', 'day', 'and', 'sure', 'enough', 'I', 'saw', 'an', 'angri', 'one', 'jump', 'out', 'of', 'my', 'dentist', 's', 'bag', 'within', 'minut', 'of', 'arriv', 'she', 'hardli', 'even', 'notic']
+
+Lemmatized text:
+['So', 'many', 'squid', 'be', 'jump', 'out', 'of', 'suitcase', 'these', 'day', 'that', 'you', 'can', 'barely', 'go', 'anywhere', 'without', 'see', 'one', 'burst', 'forth', 'from', 'a', 'tightly', 'pack', 'valise', 'I', 'go', 'to', 'the', 'dentist', 'the', 'other', 'day', 'and', 'sure', 'enough', 'I', 'saw', 'an', 'angry', 'one', 'jump', 'out', 'of', 'my', 'dentist', 's', 'bag', 'within', 'minute', 'of', 'arrive', 'She', 'hardly', 'even', 'notice']
